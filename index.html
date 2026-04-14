@@ -19,7 +19,7 @@
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
   body {
     background: var(--warm);
@@ -27,8 +27,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 200;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-    max-width: 100%;
+    width: 100%;
     position: relative;
   }
 
@@ -41,14 +40,17 @@
   }
 
   /* ── BOTANICAL CORNERS (subtle on mobile) ── */
-  .botanical { 
-    position:fixed; pointer-events:none; z-index:0; opacity:0.045; 
-    max-width: 50vw;
-    max-height: 50vh;
-    overflow:hidden; 
-  }
+  .botanical { position:fixed; pointer-events:none; z-index:0; opacity:0.045; }
   .botanical.tl { top:-10px; left:-10px; }
   .botanical.br { bottom:-10px; right:-10px; transform:rotate(180deg); }
+  
+  /* Fix horizontal overflow without breaking vertical scroll */
+  .page-wrap {
+    overflow-x: clip;
+    overflow-y: visible;
+    width: 100%;
+    position: relative;
+  }
 
   /* ── STICKY NAV ── */
   .nav {
@@ -198,7 +200,6 @@
     max-width: 680px;
     margin: 0 auto;
     padding: 72px 24px 60px;
-    overflow-x: hidden;
     width: 100%;
   }
   .section + .section { border-top: 1px solid var(--border); }
@@ -348,15 +349,16 @@
 </head>
 <body>
 
+<div class="page-wrap">
 <!-- botanical -->
-<svg class="botanical tl" width="260" height="260" viewBox="0 0 320 320" fill="none">
+<svg class="botanical tl" width="180" height="180" viewBox="0 0 320 320" fill="none">
   <path d="M20,300 Q60,200 140,80" stroke="#2e5f5c" stroke-width="1.5" fill="none"/>
   <path d="M20,300 Q-20,220 40,180 Q80,160 140,80 Q100,150 60,200 Q30,240 20,300Z" fill="#2e5f5c"/>
   <path d="M80,200 Q30,170 50,130 Q90,120 100,160Z" fill="#2e5f5c" opacity="0.6"/>
   <ellipse cx="148" cy="72" rx="10" ry="18" transform="rotate(-35 148 72)" fill="#2e5f5c" opacity="0.5"/>
   <circle cx="88" cy="192" r="3.5" fill="#b4a07a" opacity="0.7"/>
 </svg>
-<svg class="botanical br" width="260" height="260" viewBox="0 0 320 320" fill="none">
+<svg class="botanical br" width="180" height="180" viewBox="0 0 320 320" fill="none">
   <path d="M20,300 Q60,200 140,80" stroke="#2e5f5c" stroke-width="1.5" fill="none"/>
   <path d="M20,300 Q-20,220 40,180 Q80,160 140,80 Q100,150 60,200 Q30,240 20,300Z" fill="#2e5f5c"/>
   <path d="M80,200 Q30,170 50,130 Q90,120 100,160Z" fill="#2e5f5c" opacity="0.6"/>
@@ -701,5 +703,6 @@
 
   sections.forEach(s => observer.observe(s));
 </script>
+</div>
 </body>
 </html>
